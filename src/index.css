@@ -1,0 +1,106 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --brand-cyan: #01BDFC;
+    --brand-cyan-dim: #0a84b0;
+    --brand-cyan-tint: rgba(1, 189, 252, 0.08);
+    --brand-cyan-glow: rgba(1, 189, 252, 0.25);
+    --brand-navy-deep: #00091B;
+    --brand-navy-surface: #021630;
+    --brand-navy-card: rgba(2, 22, 48, 0.85);
+    --brand-slate: #8da1b9;
+    --brand-border: rgba(1, 189, 252, 0.2);
+    --bg-main: #00091B;
+    --text-main: #FFFFFF;
+    --text-muted: #8da1b9;
+  }
+
+  html.light {
+    --bg-main: #F8FAFC;
+    --text-main: #021630;
+    --text-muted: #475569;
+    --brand-navy-card: #FFFFFF;
+    --brand-border: rgba(2, 22, 48, 0.15);
+    --brand-cyan-tint: rgba(1, 189, 252, 0.12);
+  }
+
+  body {
+    font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4, h5, h6, .font-display {
+    font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+    letter-spacing: -0.02em;
+  }
+}
+
+/* Subtle Sci-Fi / HUD Scan Effect */
+@keyframes scanline {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(1000%);
+  }
+}
+
+@keyframes radarSweep {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes eyePulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.85;
+  }
+  50% {
+    transform: scale(1.08);
+    opacity: 1;
+    filter: drop-shadow(0 0 16px rgba(1, 189, 252, 0.7));
+  }
+}
+
+.animate-scanline {
+  animation: scanline 8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+.animate-radar {
+  animation: radarSweep 14s linear infinite;
+}
+
+.animate-eye-pulse {
+  animation: eyePulse 4s ease-in-out infinite;
+}
+
+/* Tech grid lines (HUD precision) */
+.bg-hud-grid {
+  background-size: 40px 40px;
+  background-image: 
+    linear-gradient(to right, rgba(1, 189, 252, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(1, 189, 252, 0.05) 1px, transparent 1px);
+}
+
+.light .bg-hud-grid {
+  background-image: 
+    linear-gradient(to right, rgba(2, 22, 48, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(2, 22, 48, 0.04) 1px, transparent 1px);
+}
+
+/* Custom glow utility */
+.glow-cyan-sm {
+  box-shadow: 0 0 15px -3px rgba(1, 189, 252, 0.3);
+}
+
+.glow-cyan-md {
+  box-shadow: 0 0 25px -2px rgba(1, 189, 252, 0.45);
+}
