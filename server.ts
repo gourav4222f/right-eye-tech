@@ -1,6 +1,6 @@
 import express from 'express';
 import path from 'path';
-import { createServer as createViteServer } from 'vite';
+import fs from 'fs';
 import nodemailer from 'nodemailer';
 import dotenv from 'dotenv';
 
@@ -381,18 +381,23 @@ app.get('/api/leads', (req, res) => {
 // VITE SPA MIDDLEWARE / PRODUCTION STATIC SERVING
 // ----------------------------------------------------
 async function startServer() {
-  if (process.env.NODE_ENV !== 'production') {
+  const distPath = path.join(process.cwd(), 'dist');
+  const indexHtml = path.join(distPath, 'index.html');
+
+  if (process.env.NODE_ENV === 'production' || fs.existsSync(indexHtml)) {
+    console.log(`[Hostinger Production] Serving static build from: ${distPath}`);
+    app.use(express.static(distPath));
+    app.get('*', (req, res) => {
+      res.sendFile(indexHtml);
+    });
+  } else {
+    console.log('[Dev] Loading Vite middleware...');
+    const { createServer: createViteServer } = await import('vite');
     const vite = await createViteServer({
       server: { middlewareMode: true },
       appType: 'spa',
     });
     app.use(vite.middlewares);
-  } else {
-    const distPath = path.join(process.cwd(), 'dist');
-    app.use(express.static(distPath));
-    app.get('*', (req, res) => {
-      res.sendFile(path.join(distPath, 'index.html'));
-    });
   }
 
   const port = process.env.PORT || 3000;
@@ -401,7 +406,7 @@ async function startServer() {
       console.log(`RIGHT EYE Technology server listening on socket ${port}`);
     });
   } else {
-    app.listen(Number(port), '0.0.0.0', () => {
+    app.listen(Number(port), () => {
       console.log(`RIGHT EYE Technology server running on port ${port}`);
       console.log(`SMTP configured: Host=${SMTP_HOST}, User=${SMTP_USER}, Recipient=${RECIPIENT_EMAIL}`);
     });
