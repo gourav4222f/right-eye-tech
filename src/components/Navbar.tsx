@@ -77,10 +77,10 @@ export const Navbar: React.FC<NavbarProps> = ({
         </button>
 
         {/* Desktop Navigation Links */}
-        <nav className="hidden lg:flex items-center gap-1 font-display tracking-tight text-sm">
+        <nav className="hidden lg:flex items-center gap-0.5 xl:gap-1.5 font-display tracking-tight text-xs xl:text-sm shrink-0">
           <button
             onClick={() => handleNav('/')}
-            className={`px-3 py-2 rounded-md transition-colors cursor-pointer ${
+            className={`px-2 xl:px-3 py-2 rounded-md transition-colors cursor-pointer whitespace-nowrap shrink-0 ${
               currentPath === '/'
                 ? 'text-[#01BDFC] font-semibold'
                 : isDark
@@ -93,13 +93,13 @@ export const Navbar: React.FC<NavbarProps> = ({
 
           {/* Services Mega Dropdown */}
           <div
-            className="relative"
+            className="relative shrink-0"
             onMouseEnter={() => setActiveDropdown('services')}
             onMouseLeave={() => setActiveDropdown(null)}
           >
             <button
               onClick={() => handleNav('/services')}
-              className={`px-3 py-2 rounded-md transition-colors flex items-center gap-1 cursor-pointer ${
+              className={`px-2 xl:px-3 py-2 rounded-md transition-colors flex items-center gap-1 cursor-pointer whitespace-nowrap shrink-0 ${
                 currentPath.startsWith('/services')
                   ? 'text-[#01BDFC] font-semibold'
                   : isDark
@@ -107,8 +107,8 @@ export const Navbar: React.FC<NavbarProps> = ({
                   : 'text-slate-700 hover:text-[#021630]'
               }`}
             >
-              <span>Services</span>
-              <ChevronDown className="w-3.5 h-3.5 opacity-70" />
+              <span className="whitespace-nowrap">Services</span>
+              <ChevronDown className="w-3.5 h-3.5 opacity-70 shrink-0" />
             </button>
 
             {activeDropdown === 'services' && (
@@ -152,13 +152,13 @@ export const Navbar: React.FC<NavbarProps> = ({
 
           {/* Industries Dropdown */}
           <div
-            className="relative"
+            className="relative shrink-0"
             onMouseEnter={() => setActiveDropdown('industries')}
             onMouseLeave={() => setActiveDropdown(null)}
           >
             <button
               onClick={() => handleNav('/industries/healthcare')}
-              className={`px-3 py-2 rounded-md transition-colors flex items-center gap-1 cursor-pointer ${
+              className={`px-2 xl:px-3 py-2 rounded-md transition-colors flex items-center gap-1 cursor-pointer whitespace-nowrap shrink-0 ${
                 currentPath.startsWith('/industries')
                   ? 'text-[#01BDFC] font-semibold'
                   : isDark
@@ -166,8 +166,8 @@ export const Navbar: React.FC<NavbarProps> = ({
                   : 'text-slate-700 hover:text-[#021630]'
               }`}
             >
-              <span>Industries</span>
-              <ChevronDown className="w-3.5 h-3.5 opacity-70" />
+              <span className="whitespace-nowrap">Industries</span>
+              <ChevronDown className="w-3.5 h-3.5 opacity-70 shrink-0" />
             </button>
 
             {activeDropdown === 'industries' && (
@@ -193,15 +193,15 @@ export const Navbar: React.FC<NavbarProps> = ({
             )}
           </div>
 
-          {/* Location Hubs Dropdown */}
+          {/* Location Hubs Dropdown - Pan-India Reach */}
           <div
-            className="relative"
+            className="relative shrink-0"
             onMouseEnter={() => setActiveDropdown('locations')}
             onMouseLeave={() => setActiveDropdown(null)}
           >
             <button
               onClick={() => handleNav('/digital-marketing-agency-india')}
-              className={`px-3 py-2 rounded-md transition-colors flex items-center gap-1 cursor-pointer ${
+              className={`px-2 xl:px-3 py-2 rounded-md transition-colors flex items-center gap-1 cursor-pointer whitespace-nowrap shrink-0 ${
                 currentPath.includes('digital-marketing-agency')
                   ? 'text-[#01BDFC] font-semibold'
                   : isDark
@@ -209,8 +209,8 @@ export const Navbar: React.FC<NavbarProps> = ({
                   : 'text-slate-700 hover:text-[#021630]'
               }`}
             >
-              <span>Pan-India Reach</span>
-              <ChevronDown className="w-3.5 h-3.5 opacity-70" />
+              <span className="whitespace-nowrap">Pan-India Reach</span>
+              <ChevronDown className="w-3.5 h-3.5 opacity-70 shrink-0" />
             </button>
 
             {activeDropdown === 'locations' && (
@@ -242,7 +242,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
           <button
             onClick={() => handleNav('/portfolio')}
-            className={`px-3 py-2 rounded-md transition-colors cursor-pointer ${
+            className={`px-2 xl:px-3 py-2 rounded-md transition-colors cursor-pointer whitespace-nowrap shrink-0 ${
               currentPath === '/portfolio'
                 ? 'text-[#01BDFC] font-semibold'
                 : isDark
@@ -255,7 +255,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
           <button
             onClick={() => handleNav('/pricing')}
-            className={`px-3 py-2 rounded-md transition-colors cursor-pointer ${
+            className={`px-2 xl:px-3 py-2 rounded-md transition-colors cursor-pointer whitespace-nowrap shrink-0 ${
               currentPath === '/pricing'
                 ? 'text-[#01BDFC] font-semibold'
                 : isDark
@@ -268,7 +268,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
           <button
             onClick={() => handleNav('/about')}
-            className={`px-3 py-2 rounded-md transition-colors cursor-pointer ${
+            className={`px-2 xl:px-3 py-2 rounded-md transition-colors cursor-pointer whitespace-nowrap shrink-0 ${
               currentPath === '/about'
                 ? 'text-[#01BDFC] font-semibold'
                 : isDark
@@ -281,7 +281,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
           <button
             onClick={() => handleNav('/contact')}
-            className={`px-3 py-2 rounded-md transition-colors cursor-pointer ${
+            className={`px-2 xl:px-3 py-2 rounded-md transition-colors cursor-pointer whitespace-nowrap shrink-0 ${
               currentPath === '/contact'
                 ? 'text-[#01BDFC] font-semibold'
                 : isDark
@@ -294,11 +294,11 @@ export const Navbar: React.FC<NavbarProps> = ({
         </nav>
 
         {/* Right CTA Actions: Phone Call + Dark/Light Toggle + Audit Button */}
-        <div className="hidden sm:flex items-center gap-3">
+        <div className="hidden sm:flex items-center gap-2 xl:gap-3 shrink-0">
           {/* Quick Phone Call with Indian Phone */}
           <a
             href={`tel:${BUSINESS_INFO.phone}`}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-mono transition-colors border ${
+            className={`hidden 2xl:flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-mono transition-colors border whitespace-nowrap shrink-0 ${
               isDark
                 ? 'border-[#01BDFC]/30 text-[#01BDFC] hover:bg-[#01BDFC]/10'
                 : 'border-slate-300 text-[#021630] hover:bg-slate-100'
@@ -312,7 +312,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           <button
             onClick={onToggleTheme}
             aria-label="Toggle Theme Mode"
-            className={`p-2 rounded-lg border transition-colors cursor-pointer ${
+            className={`p-2 rounded-lg border transition-colors cursor-pointer shrink-0 ${
               isDark
                 ? 'border-[#01BDFC]/30 text-amber-300 hover:bg-[#01BDFC]/10'
                 : 'border-slate-300 text-slate-700 hover:bg-slate-100'
@@ -324,7 +324,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           {/* Primary Action Button (Consultation Request) */}
           <button
             onClick={onOpenAudit}
-            className="relative group overflow-hidden px-4 py-2 rounded-lg text-xs font-display font-semibold tracking-wide bg-[#01BDFC] text-[#00091B] hover:brightness-110 transition-all cursor-pointer shadow-[0_0_20px_rgba(1,189,252,0.35)]"
+            className="relative group overflow-hidden px-3.5 xl:px-4 py-2 rounded-lg text-xs font-display font-semibold tracking-wide bg-[#01BDFC] text-[#00091B] hover:brightness-110 transition-all cursor-pointer shadow-[0_0_20px_rgba(1,189,252,0.35)] whitespace-nowrap shrink-0"
           >
             <span className="flex items-center gap-1.5">
               <Eye className="w-3.5 h-3.5" />

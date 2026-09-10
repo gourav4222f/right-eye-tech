@@ -104,3 +104,25 @@
 .glow-cyan-md {
   box-shadow: 0 0 25px -2px rgba(1, 189, 252, 0.45);
 }
+
+/* Continuous Marquee Ticker */
+@keyframes marqueeScroll {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee-scroll {
+  display: flex;
+  width: max-content;
+  animation: marqueeScroll 18s linear infinite;
+  will-change: transform;
+}
+
+.animate-marquee-scroll:hover {
+  animation-play-state: paused;
+}
+
