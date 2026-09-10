@@ -2,7 +2,7 @@ import React from 'react';
 import { RightEyeLogo } from './RightEyeLogo';
 import { ThemeMode } from '../types';
 import { BUSINESS_INFO, SERVICES_DATA, INDUSTRIES_DATA, LOCATIONS_DATA } from '../data/siteData';
-import { Phone, Mail, MapPin, Globe, Shield, ArrowUpRight } from 'lucide-react';
+import { Phone, Mail, MapPin, Globe, ShieldCheck, ArrowUpRight } from 'lucide-react';
 
 interface FooterProps {
   theme: ThemeMode;
@@ -20,7 +20,7 @@ export const Footer: React.FC<FooterProps> = ({ theme, onNavigate }) => {
           : 'bg-slate-50 border-slate-200 text-slate-700'
       }`}
     >
-      {/* HUD Telemetry Coordinate Bar */}
+      {/* Pan-India Operational Bar */}
       <div
         className={`border-b py-2 px-4 text-center font-mono text-[11px] tracking-widest ${
           isDark
@@ -28,11 +28,11 @@ export const Footer: React.FC<FooterProps> = ({ theme, onNavigate }) => {
             : 'bg-slate-100 border-slate-200 text-[#021630]'
         }`}
       >
-        <span>SYS.STATUS: OPERATIONAL</span>
+        <span>STATUS: PAN-INDIA SERVICE ACTIVE</span>
         <span className="mx-3 text-slate-500">|</span>
-        <span>HQ COORDINATES: 28.7188° N, 77.0694° E</span>
+        <span>SERVING CLIENTS ACROSS ALL 28 INDIAN STATES & MAJOR METROS</span>
         <span className="mx-3 text-slate-500">|</span>
-        <span>DELHI NCR REGIONAL OPERATIONS</span>
+        <span>DIRECT HOTLINE: {BUSINESS_INFO.phone}</span>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
@@ -43,11 +43,11 @@ export const Footer: React.FC<FooterProps> = ({ theme, onNavigate }) => {
               onClick={() => onNavigate('/')}
               className="text-left focus:outline-none cursor-pointer w-fit"
             >
-              <RightEyeLogo theme={theme} size="lg" />
+              <RightEyeLogo theme={theme} size="lg" showTagline={true} />
             </button>
 
             <p className="text-sm leading-relaxed max-w-sm mt-1">
-              RIGHT EYE Technology is Delhi NCR’s futuristic growth agency. We perceive, track, and architect market dominance through ultra-fast web systems, algorithmic SEO, and high-converting performance media.
+              RIGHT EYE Technology is a premier Pan-India digital marketing and web development agency. We empower businesses across India with results-driven SEO, modern website design, custom web development, Google Ads, Google Business Profile (GMB) optimization, and graphic branding.
             </p>
 
             {/* Official NAP (Name, Address, Phone) Section */}
@@ -60,16 +60,16 @@ export const Footer: React.FC<FooterProps> = ({ theme, onNavigate }) => {
                 <MapPin className="w-4 h-4 text-[#01BDFC] shrink-0 mt-0.5" />
                 <span>
                   <strong className="block text-slate-900 dark:text-white font-sans font-semibold">
-                    Headquarters:
+                    Headquarters & Pan-India Desk:
                   </strong>
-                  {BUSINESS_INFO.address}, India
+                  {BUSINESS_INFO.address}
                 </span>
               </div>
               <div className="flex items-center gap-2">
                 <Phone className="w-4 h-4 text-[#01BDFC] shrink-0" />
                 <span>
                   <strong className="text-slate-900 dark:text-white font-sans font-semibold mr-1">
-                    Direct Line:
+                    Call / WhatsApp:
                   </strong>
                   <a href={`tel:${BUSINESS_INFO.phone}`} className="hover:text-[#01BDFC] underline">
                     {BUSINESS_INFO.phone}
@@ -80,7 +80,7 @@ export const Footer: React.FC<FooterProps> = ({ theme, onNavigate }) => {
                 <Mail className="w-4 h-4 text-[#01BDFC] shrink-0" />
                 <span>
                   <strong className="text-slate-900 dark:text-white font-sans font-semibold mr-1">
-                    Inquiries:
+                    Email Inquiries:
                   </strong>
                   <a href={`mailto:${BUSINESS_INFO.email}`} className="hover:text-[#01BDFC] underline">
                     {BUSINESS_INFO.email}
@@ -91,7 +91,7 @@ export const Footer: React.FC<FooterProps> = ({ theme, onNavigate }) => {
                 <Globe className="w-4 h-4 text-[#01BDFC] shrink-0" />
                 <span>
                   <strong className="text-slate-900 dark:text-white font-sans font-semibold mr-1">
-                    Domain:
+                    Official Website:
                   </strong>
                   righteyetechnology.com
                 </span>
@@ -99,24 +99,24 @@ export const Footer: React.FC<FooterProps> = ({ theme, onNavigate }) => {
             </div>
           </div>
 
-          {/* Column 2: Core & Web Services */}
+          {/* Column 2: 6 Core Services */}
           <div>
             <h4
               className={`font-display font-semibold text-sm tracking-wide mb-4 ${
                 isDark ? 'text-white' : 'text-[#021630]'
               }`}
             >
-              Web & Growth Systems
+              Our Core Services
             </h4>
             <ul className="flex flex-col gap-2.5 text-xs">
-              {SERVICES_DATA.slice(0, 6).map((srv) => (
+              {SERVICES_DATA.map((srv) => (
                 <li key={srv.slug}>
                   <button
                     onClick={() => onNavigate(`/services/${srv.slug}`)}
                     className="hover:text-[#01BDFC] transition-colors text-left flex items-center gap-1 group cursor-pointer"
                   >
                     <span>{srv.title}</span>
-                    <ArrowUpRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
+                    <ArrowUpRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity text-[#01BDFC]" />
                   </button>
                 </li>
               ))}
@@ -125,13 +125,13 @@ export const Footer: React.FC<FooterProps> = ({ theme, onNavigate }) => {
                   onClick={() => onNavigate('/services')}
                   className="text-[#01BDFC] font-semibold hover:underline mt-1 inline-block cursor-pointer"
                 >
-                  Explore All Capabilities &rarr;
+                  View All Core Services &rarr;
                 </button>
               </li>
             </ul>
           </div>
 
-          {/* Column 3: Industry Solutions */}
+          {/* Column 3: Industries & Company */}
           <div>
             <h4
               className={`font-display font-semibold text-sm tracking-wide mb-4 ${
@@ -148,7 +148,7 @@ export const Footer: React.FC<FooterProps> = ({ theme, onNavigate }) => {
                     className="hover:text-[#01BDFC] transition-colors text-left flex items-center gap-1 group cursor-pointer"
                   >
                     <span>{ind.title}</span>
-                    <ArrowUpRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
+                    <ArrowUpRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity text-[#01BDFC]" />
                   </button>
                 </li>
               ))}
@@ -159,40 +159,40 @@ export const Footer: React.FC<FooterProps> = ({ theme, onNavigate }) => {
                 isDark ? 'text-white' : 'text-[#021630]'
               }`}
             >
-              Company
+              Quick Links
             </h4>
             <ul className="flex flex-col gap-2 text-xs">
               <li>
-                <button onClick={() => onNavigate('/about')} className="hover:text-[#01BDFC]">
-                  About RIGHT EYE
+                <button onClick={() => onNavigate('/about')} className="hover:text-[#01BDFC] cursor-pointer">
+                  About Our Agency
                 </button>
               </li>
               <li>
-                <button onClick={() => onNavigate('/portfolio')} className="hover:text-[#01BDFC]">
+                <button onClick={() => onNavigate('/portfolio')} className="hover:text-[#01BDFC] cursor-pointer">
                   Case Studies & Work
                 </button>
               </li>
               <li>
-                <button onClick={() => onNavigate('/pricing')} className="hover:text-[#01BDFC]">
-                  Pricing Packages India
+                <button onClick={() => onNavigate('/pricing')} className="hover:text-[#01BDFC] cursor-pointer">
+                  Packages & Pricing
                 </button>
               </li>
               <li>
-                <button onClick={() => onNavigate('/contact')} className="hover:text-[#01BDFC]">
-                  Contact & Location
+                <button onClick={() => onNavigate('/contact')} className="hover:text-[#01BDFC] cursor-pointer">
+                  Contact Us
                 </button>
               </li>
             </ul>
           </div>
 
-          {/* Column 4: Delhi NCR Location Corridors */}
+          {/* Column 4: Pan-India Service Hubs */}
           <div>
             <h4
               className={`font-display font-semibold text-sm tracking-wide mb-4 ${
                 isDark ? 'text-white' : 'text-[#021630]'
               }`}
             >
-              Delhi NCR Hubs
+              Pan-India Locations
             </h4>
             <ul className="flex flex-col gap-2.5 text-xs">
               {LOCATIONS_DATA.map((loc) => (
@@ -202,7 +202,7 @@ export const Footer: React.FC<FooterProps> = ({ theme, onNavigate }) => {
                     className="hover:text-[#01BDFC] transition-colors text-left flex items-center gap-1 group cursor-pointer"
                   >
                     <span>{loc.title}</span>
-                    <ArrowUpRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
+                    <ArrowUpRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity text-[#01BDFC]" />
                   </button>
                 </li>
               ))}
@@ -214,11 +214,11 @@ export const Footer: React.FC<FooterProps> = ({ theme, onNavigate }) => {
               }`}
             >
               <div className="flex items-center gap-1.5 text-[#01BDFC] font-semibold mb-1">
-                <Shield className="w-3.5 h-3.5" />
-                <span>Verified Local Agency</span>
+                <ShieldCheck className="w-4 h-4" />
+                <span>Pan-India Delivery</span>
               </div>
               <p className="text-slate-400">
-                Operating directly from Rohini Sector 20 with registered Delhi commercial presence.
+                Serving clients across Delhi NCR, Mumbai, Bengaluru, Hyderabad, Pune, and all Indian states with dedicated account managers and GST invoicing.
               </p>
             </div>
           </div>
@@ -226,11 +226,11 @@ export const Footer: React.FC<FooterProps> = ({ theme, onNavigate }) => {
 
         {/* Bottom Copyright & Rights */}
         <div className="mt-12 pt-6 border-t border-slate-700/20 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-4">
-          <p>© {new Date().getFullYear()} RIGHT EYE Technology. All rights reserved. Registered in Delhi, India.</p>
+          <p>© {new Date().getFullYear()} RIGHT EYE Technology. All rights reserved. Pan-India Digital Marketing & Web Development Agency.</p>
           <div className="flex items-center gap-6 font-mono text-[11px]">
-            <span>CONFIDENTIAL ARCHITECTURE</span>
-            <span>WCAG 2.1 AA COMPLIANT</span>
-            <span>SSL 256-BIT ENCRYPTED</span>
+            <span>PAN-INDIA REACH</span>
+            <span>GST COMPLIANT</span>
+            <span>100% IP OWNERSHIP</span>
           </div>
         </div>
       </div>

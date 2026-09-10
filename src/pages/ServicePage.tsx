@@ -7,10 +7,11 @@ import {
   ShieldCheck,
   Zap,
   HelpCircle,
-  Clock,
   Layers,
   Phone,
-  BarChart,
+  MessageCircle,
+  TrendingUp,
+  Globe,
 } from 'lucide-react';
 
 interface ServicePageProps {
@@ -37,11 +38,11 @@ export const ServicePage: React.FC<ServicePageProps> = ({
     <div className="relative pt-32 pb-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       {/* Breadcrumbs (SEO & Internal Linking) */}
       <nav className="flex items-center gap-2 text-xs font-mono text-slate-400 mb-6">
-        <button onClick={() => onNavigate('/')} className="hover:text-[#01BDFC]">
+        <button onClick={() => onNavigate('/')} className="hover:text-[#01BDFC] cursor-pointer">
           Home
         </button>
         <span>/</span>
-        <button onClick={() => onNavigate('/services')} className="hover:text-[#01BDFC]">
+        <button onClick={() => onNavigate('/services')} className="hover:text-[#01BDFC] cursor-pointer">
           Services
         </button>
         {parentService && (
@@ -49,7 +50,7 @@ export const ServicePage: React.FC<ServicePageProps> = ({
             <span>/</span>
             <button
               onClick={() => onNavigate(`/services/${parentService.slug}`)}
-              className="hover:text-[#01BDFC]"
+              className="hover:text-[#01BDFC] cursor-pointer"
             >
               {parentService.title}
             </button>
@@ -60,13 +61,12 @@ export const ServicePage: React.FC<ServicePageProps> = ({
       </nav>
 
       {/* Service Hero Banner */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start mb-16">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start mb-12">
         <div className="lg:col-span-8 space-y-6">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[#01BDFC]/40 bg-[#01BDFC]/10 text-[#01BDFC] text-xs font-mono">
-            <span>PILLAR CAPABILITY // {service.category}</span>
+            <span>CORE SERVICE // {service.category.toUpperCase()}</span>
           </div>
 
-          {/* Exact H1 for SEO Target Keyword */}
           <h1 className="text-3xl sm:text-5xl font-display font-extrabold tracking-tight leading-tight">
             {service.title} —{' '}
             <span className="text-[#01BDFC]">
@@ -78,13 +78,37 @@ export const ServicePage: React.FC<ServicePageProps> = ({
             {service.fullDesc}
           </p>
 
-          <div className="flex flex-wrap gap-4 pt-2">
+          {/* Key Client Business Benefit Highlight */}
+          <div
+            className={`p-5 rounded-2xl border ${
+              isDark ? 'bg-[#00091B] border-[#01BDFC]/40 text-slate-200' : 'bg-sky-50 border-sky-200 text-sky-950'
+            }`}
+          >
+            <div className="flex items-center gap-2 font-display font-bold text-sm text-[#01BDFC] mb-1.5">
+              <TrendingUp className="w-4 h-4" />
+              <span>KEY CLIENT BUSINESS BENEFIT</span>
+            </div>
+            <p className="text-xs sm:text-sm leading-relaxed">
+              {service.businessBenefits}
+            </p>
+          </div>
+
+          <div className="flex flex-wrap gap-3 pt-2">
             <button
               onClick={onOpenAudit}
               className="px-6 py-3 rounded-xl bg-[#01BDFC] text-[#00091B] font-display font-bold text-sm tracking-wide hover:brightness-110 shadow-[0_0_20px_rgba(1,189,252,0.4)] cursor-pointer"
             >
-              Request Scoped Proposal &rarr;
+              Get Free Consultation & Quote &rarr;
             </button>
+            <a
+              href={`https://wa.me/918700275224?text=Hi%20RIGHT%20EYE%20Technology,%20I%20would%20like%20to%20discuss%20${encodeURIComponent(service.title)}%20for%20my%20business.`}
+              target="_blank"
+              rel="noreferrer"
+              className="px-5 py-3 rounded-xl border border-emerald-500 text-emerald-400 hover:bg-emerald-500/10 font-mono text-xs flex items-center gap-2 transition-colors"
+            >
+              <MessageCircle className="w-4 h-4 text-emerald-400" />
+              <span>WhatsApp Us</span>
+            </a>
             <a
               href={`tel:${BUSINESS_INFO.phone}`}
               className={`px-5 py-3 rounded-xl border text-xs font-mono flex items-center gap-2 transition-colors ${
@@ -92,7 +116,7 @@ export const ServicePage: React.FC<ServicePageProps> = ({
               }`}
             >
               <Phone className="w-4 h-4" />
-              <span>Discuss Scope: {BUSINESS_INFO.phone}</span>
+              <span>Call: {BUSINESS_INFO.phone}</span>
             </a>
           </div>
         </div>
@@ -105,7 +129,7 @@ export const ServicePage: React.FC<ServicePageProps> = ({
             }`}
           >
             <div className="text-xs font-mono text-[#01BDFC] mb-4 flex items-center justify-between">
-              <span>BENCHMARK TELEMETRY</span>
+              <span>PROVEN PERFORMANCE METRICS</span>
               <Zap className="w-3.5 h-3.5" />
             </div>
 
@@ -117,24 +141,24 @@ export const ServicePage: React.FC<ServicePageProps> = ({
                 </div>
               ))}
               <div className="pt-2 text-[11px] text-slate-400 leading-relaxed font-mono">
-                Validated across 50+ enterprise and SME deployments in Delhi, Gurgaon, and Noida.
+                Validated across 50+ enterprise and SME clients across India, including Delhi NCR, Mumbai, Bengaluru, and Pune.
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Deep Content Section (800+ Words Depth Requirement) */}
+      {/* Deep Content Section */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
         <div className="lg:col-span-8 space-y-12">
-          {/* Section: Architectural Advantages */}
+          {/* Section: Features & Capabilities */}
           <div>
             <h2 className="text-2xl font-display font-bold mb-4 flex items-center gap-2">
               <Layers className="w-5 h-5 text-[#01BDFC]" />
-              <span>Engineered Core Specifications</span>
+              <span>Service Capabilities & Execution Standards</span>
             </h2>
             <p className={`text-sm leading-relaxed mb-6 ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
-              In contrast to generic Delhi agencies that rely on pre-fabricated templates and third-party plugin bloat, RIGHT EYE Technology approaches {service.primaryKeyword} as an exact discipline. We eliminate latency, enforce programmatic accessibility, and synchronize server telemetry with Google’s core evaluation bots.
+              RIGHT EYE Technology approaches {service.primaryKeyword} with commercial discipline. We eliminate guesswork, apply industry-leading web standards, and build transparent pipelines that directly benefit your bottom line.
             </p>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -156,7 +180,7 @@ export const ServicePage: React.FC<ServicePageProps> = ({
           <div>
             <h2 className="text-2xl font-display font-bold mb-4 flex items-center gap-2">
               <ShieldCheck className="w-5 h-5 text-[#01BDFC]" />
-              <span>Guaranteed Technical Deliverables</span>
+              <span>Included Deliverables & Scope</span>
             </h2>
             <div
               className={`p-6 rounded-2xl border space-y-3 ${
@@ -166,28 +190,28 @@ export const ServicePage: React.FC<ServicePageProps> = ({
               {service.deliverables.map((item, idx) => (
                 <div key={idx} className="flex items-center gap-3 text-xs">
                   <span className="w-2 h-2 rounded-full bg-[#01BDFC] shrink-0" />
-                  <span className="font-mono text-slate-300">{item}</span>
+                  <span className={`font-mono ${isDark ? 'text-slate-300' : 'text-slate-800'}`}>{item}</span>
                 </div>
               ))}
             </div>
           </div>
 
-          {/* Section: Delhi NCR Market Context & ROI */}
+          {/* Section: Pan-India Business Context & ROI */}
           <div>
             <h2 className="text-2xl font-display font-bold mb-4">
-              Strategic Value for Delhi NCR Enterprises
+              Strategic Value for Indian Businesses
             </h2>
             <p className={`text-sm leading-relaxed ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
-              The competitive commercial landscape in Delhi NCR demands ruthless speed and unassailable authority. A delay of 500 milliseconds in page load or a weak presence on Google's local pack immediately forfeits transactions to competitors. By deploying our {service.title} protocols, your business secures an algorithmic moat that continuously lowers customer acquisition costs while boosting gross profit margins.
+              The competitive commercial landscape across India demands high speed and credible digital authority. Whether you are targeting local customers in Delhi NCR or expanding across Mumbai, Bengaluru, Hyderabad, and tier-2 markets, our {service.title} protocols ensure you stay ahead of competitors, lower your customer acquisition costs, and maximize your returns.
             </p>
           </div>
 
-          {/* Section: Frequently Asked Questions (Schema Compliant) */}
+          {/* Section: Frequently Asked Questions */}
           {service.faq && service.faq.length > 0 && (
             <div>
               <h2 className="text-2xl font-display font-bold mb-6 flex items-center gap-2">
                 <HelpCircle className="w-5 h-5 text-[#01BDFC]" />
-                <span>Technical Inquiries & FAQs</span>
+                <span>Service Inquiries & FAQs</span>
               </h2>
               <div className="space-y-4">
                 {service.faq.map((faqItem, idx) => (
@@ -210,9 +234,9 @@ export const ServicePage: React.FC<ServicePageProps> = ({
           )}
         </div>
 
-        {/* Sidebar: Sub-services (Pillar to Cluster Linking) & Regional Anchor */}
+        {/* Sidebar */}
         <div className="lg:col-span-4 space-y-8">
-          {/* Cluster Linking: Sub Services */}
+          {/* Sub Services */}
           {service.subServices && service.subServices.length > 0 && (
             <div
               className={`p-6 rounded-2xl border ${
@@ -220,7 +244,7 @@ export const ServicePage: React.FC<ServicePageProps> = ({
               }`}
             >
               <h3 className="font-display font-bold text-sm uppercase tracking-wider mb-4 text-[#01BDFC]">
-                Connected Sub-Capabilities
+                Related Capabilities
               </h3>
               <div className="flex flex-col gap-2">
                 {service.subServices.map((sub) => (
@@ -241,28 +265,32 @@ export const ServicePage: React.FC<ServicePageProps> = ({
             </div>
           )}
 
-          {/* Regional Delhi NCR Anchor Card */}
+          {/* Pan-India Client Service Anchor Card */}
           <div
             className={`p-6 rounded-2xl border ${
               isDark ? 'bg-[#00091B] border-[#01BDFC]/30' : 'bg-slate-50 border-slate-200'
             }`}
           >
-            <div className="text-xs font-mono text-[#01BDFC] mb-2">LOCAL BUSINESS ACCREDITATION</div>
+            <div className="flex items-center gap-2 text-xs font-mono text-[#01BDFC] mb-2">
+              <Globe className="w-4 h-4" />
+              <span>PAN-INDIA CLIENT SUPPORT</span>
+            </div>
             <h4 className="font-display font-bold text-sm mb-2">
-              Serving Delhi NCR from Rohini HQ
+              Serving Clients Nationwide
             </h4>
             <p className="text-xs text-slate-400 mb-4 leading-relaxed">
-              Every system is calibrated for Delhi’s unique commercial velocity. Meet our engineers at our Sector 20 Rohini facility or connect via encrypted video link.
+              We manage campaigns and development sprints for clients throughout India with seamless remote collaboration, weekly video calls, and dedicated WhatsApp support.
             </p>
             <div className="text-xs font-mono space-y-1 mb-4 text-slate-300">
-              <div>HQ: {BUSINESS_INFO.address}</div>
-              <div>TEL: {BUSINESS_INFO.phone}</div>
+              <div>REGISTERED HQ: {BUSINESS_INFO.address}</div>
+              <div>DIRECT LINE: {BUSINESS_INFO.phone}</div>
+              <div>COVERAGE: Pan-India Delivery</div>
             </div>
             <button
               onClick={onOpenAudit}
-              className="w-full py-2.5 rounded-lg bg-[#01BDFC] text-[#00091B] text-xs font-display font-bold hover:brightness-110 text-center"
+              className="w-full py-2.5 rounded-lg bg-[#01BDFC] text-[#00091B] text-xs font-display font-bold hover:brightness-110 text-center cursor-pointer"
             >
-              Schedule Scoping Session
+              Get Free Consultation & Quote
             </button>
           </div>
         </div>

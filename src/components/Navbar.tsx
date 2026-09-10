@@ -97,22 +97,22 @@ export const Navbar: React.FC<NavbarProps> = ({
 
             {activeDropdown === 'services' && (
               <div
-                className={`absolute top-full left-0 w-[540px] p-4 rounded-xl border shadow-2xl grid grid-cols-2 gap-3 transition-all ${
+                className={`absolute top-full left-0 w-[560px] p-4 rounded-xl border shadow-2xl grid grid-cols-2 gap-3 transition-all ${
                   isDark
                     ? 'bg-[#021630]/98 border-[#01BDFC]/30 backdrop-blur-xl text-white'
                     : 'bg-white border-slate-200 text-slate-900'
                 }`}
               >
                 <div className="col-span-2 pb-2 border-b border-slate-700/30 flex items-center justify-between">
-                  <span className="text-xs font-mono tracking-wider text-[#01BDFC]">OPTICAL CAPABILITIES // CORE</span>
+                  <span className="text-xs font-mono tracking-wider text-[#01BDFC]">CORE SERVICES // PAN-INDIA</span>
                   <button
                     onClick={() => handleNav('/services')}
-                    className="text-xs text-[#01BDFC] hover:underline"
+                    className="text-xs text-[#01BDFC] hover:underline cursor-pointer"
                   >
-                    View All 20+ Capabilities
+                    View All 6 Core Services
                   </button>
                 </div>
-                {SERVICES_DATA.slice(0, 6).map((srv) => (
+                {SERVICES_DATA.map((srv) => (
                   <button
                     key={srv.slug}
                     onClick={() => handleNav(`/services/${srv.slug}`)}
@@ -141,7 +141,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             onMouseLeave={() => setActiveDropdown(null)}
           >
             <button
-              onClick={() => handleNav('/industries/travel-tourism')}
+              onClick={() => handleNav('/industries/healthcare')}
               className={`px-3 py-2 rounded-md transition-colors flex items-center gap-1 cursor-pointer ${
                 currentPath.startsWith('/industries')
                   ? 'text-[#01BDFC] font-semibold'
@@ -184,36 +184,40 @@ export const Navbar: React.FC<NavbarProps> = ({
             onMouseLeave={() => setActiveDropdown(null)}
           >
             <button
-              onClick={() => handleNav('/digital-marketing-agency-delhi')}
+              onClick={() => handleNav('/digital-marketing-agency-india')}
               className={`px-3 py-2 rounded-md transition-colors flex items-center gap-1 cursor-pointer ${
-                currentPath.includes('delhi') || currentPath.includes('noida') || currentPath.includes('gurgaon')
+                currentPath.includes('digital-marketing-agency')
                   ? 'text-[#01BDFC] font-semibold'
                   : isDark
                   ? 'text-slate-300 hover:text-white'
                   : 'text-slate-700 hover:text-[#021630]'
               }`}
             >
-              <span>Delhi NCR</span>
+              <span>Pan-India Reach</span>
               <ChevronDown className="w-3.5 h-3.5 opacity-70" />
             </button>
 
             {activeDropdown === 'locations' && (
               <div
-                className={`absolute top-full left-0 w-64 p-3 rounded-xl border shadow-2xl flex flex-col gap-1 ${
+                className={`absolute top-full left-0 w-72 p-3 rounded-xl border shadow-2xl flex flex-col gap-1 ${
                   isDark
                     ? 'bg-[#021630]/98 border-[#01BDFC]/30 backdrop-blur-xl text-white'
                     : 'bg-white border-slate-200 text-slate-900'
                 }`}
               >
+                <div className="pb-1.5 mb-1 border-b border-slate-700/30">
+                  <span className="text-[11px] font-mono text-[#01BDFC]">SERVICE HUBS NATIONWIDE</span>
+                </div>
                 {LOCATIONS_DATA.map((loc) => (
                   <button
                     key={loc.slug}
                     onClick={() => handleNav(`/${loc.slug}`)}
-                    className={`text-left px-3 py-2 rounded-lg text-xs transition-colors hover:text-[#01BDFC] cursor-pointer ${
+                    className={`text-left px-3 py-2 rounded-lg text-xs transition-colors hover:text-[#01BDFC] cursor-pointer flex items-center justify-between ${
                       isDark ? 'hover:bg-[#00091B]/70' : 'hover:bg-slate-50'
                     }`}
                   >
-                    {loc.city} ({loc.title.split(' in ')[0]})
+                    <span className="font-medium">{loc.city}</span>
+                    <span className="text-[10px] text-slate-400">View Hub</span>
                   </button>
                 ))}
               </div>
@@ -301,14 +305,14 @@ export const Navbar: React.FC<NavbarProps> = ({
             {isDark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
           </button>
 
-          {/* Primary Action Button (Optical Audit Request) */}
+          {/* Primary Action Button (Consultation Request) */}
           <button
             onClick={onOpenAudit}
             className="relative group overflow-hidden px-4 py-2 rounded-lg text-xs font-display font-semibold tracking-wide bg-[#01BDFC] text-[#00091B] hover:brightness-110 transition-all cursor-pointer shadow-[0_0_20px_rgba(1,189,252,0.35)]"
           >
             <span className="flex items-center gap-1.5">
               <Eye className="w-3.5 h-3.5" />
-              <span>Get Free Digital Audit</span>
+              <span>Get Free Consultation</span>
             </span>
           </button>
         </div>
@@ -353,10 +357,10 @@ export const Navbar: React.FC<NavbarProps> = ({
               onClick={() => handleNav('/services')}
               className="text-left py-2 px-3 rounded-md hover:bg-[#01BDFC]/10 font-semibold text-[#01BDFC]"
             >
-              All Services (20+)
+              Core Services (6)
             </button>
             <div className="pl-4 flex flex-col gap-1 border-l border-[#01BDFC]/20 text-xs">
-              {SERVICES_DATA.slice(0, 7).map((srv) => (
+              {SERVICES_DATA.map((srv) => (
                 <button
                   key={srv.slug}
                   onClick={() => handleNav(`/services/${srv.slug}`)}
@@ -368,10 +372,10 @@ export const Navbar: React.FC<NavbarProps> = ({
             </div>
 
             <button
-              onClick={() => handleNav('/digital-marketing-agency-delhi')}
+              onClick={() => handleNav('/digital-marketing-agency-india')}
               className="text-left py-2 px-3 rounded-md hover:bg-[#01BDFC]/10 font-semibold"
             >
-              Delhi NCR Hubs
+              Pan-India Hubs
             </button>
             <div className="pl-4 flex flex-col gap-1 border-l border-[#01BDFC]/20 text-xs">
               {LOCATIONS_DATA.map((loc) => (
@@ -380,7 +384,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                   onClick={() => handleNav(`/${loc.slug}`)}
                   className="text-left py-1.5 opacity-80 hover:opacity-100 hover:text-[#01BDFC]"
                 >
-                  {loc.title}
+                  {loc.city} ({loc.title.split(' in ')[0]})
                 </button>
               ))}
             </div>
@@ -415,7 +419,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 href={`tel:${BUSINESS_INFO.phone}`}
                 className="w-full py-2.5 rounded-lg text-center font-mono text-xs border border-[#01BDFC] text-[#01BDFC]"
               >
-                Call: {BUSINESS_INFO.phone}
+                Call Now: {BUSINESS_INFO.phone}
               </a>
               <button
                 onClick={() => {
@@ -424,7 +428,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 }}
                 className="w-full py-2.5 rounded-lg text-center font-semibold text-xs bg-[#01BDFC] text-[#00091B]"
               >
-                Get Free Digital Audit
+                Get Free Consultation
               </button>
             </div>
           </div>

@@ -2,13 +2,17 @@ export type ThemeMode = 'dark' | 'light';
 
 export interface BusinessInfo {
   name: string;
+  tagline?: string;
   email: string;
   phone: string;
+  whatsapp?: string;
   address: string;
   city: string;
   region: string;
   country: string;
   website: string;
+  coverage?: string;
+  majorHubs?: string[];
   coordinates: {
     lat: number;
     lng: number;
@@ -18,10 +22,11 @@ export interface BusinessInfo {
 export interface ServiceItem {
   slug: string;
   title: string;
-  category: 'Web & CRM' | 'Digital Marketing' | 'SEO' | 'Video & Paid Ads';
+  category: 'SEO' | 'Website Design' | 'Website Development' | 'Paid Ads' | 'Google Business Profile' | 'Graphic Design' | string;
   primaryKeyword: string;
   shortDesc: string;
   fullDesc: string;
+  businessBenefits?: string[];
   features: string[];
   deliverables: string[];
   subServices?: { name: string; slug: string }[];

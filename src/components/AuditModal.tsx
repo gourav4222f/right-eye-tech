@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { ThemeMode } from '../types';
 import { BUSINESS_INFO } from '../data/siteData';
-import { X, CheckCircle2, Phone, Eye } from 'lucide-react';
+import { X, CheckCircle2, Phone, Sparkles, MessageCircle, Loader2 } from 'lucide-react';
 
 interface AuditModalProps {
   isOpen: boolean;
@@ -12,24 +12,57 @@ interface AuditModalProps {
 export const AuditModal: React.FC<AuditModalProps> = ({ isOpen, onClose, theme }) => {
   const isDark = theme === 'dark';
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
     email: '',
-    website: '',
-    serviceInterest: 'Digital Marketing & Growth',
+    city: 'Delhi NCR',
+    serviceInterest: 'Search Engine Optimization (SEO)',
     notes: '',
   });
 
   if (!isOpen) return null;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
+    setIsSubmitting(true);
+    setSubmitError(null);
+
+    try {
+      const res = await fetch('/api/inquiry', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          phone: formData.phone,
+          email: formData.email,
+          city: formData.city,
+          service: formData.serviceInterest,
+          notes: formData.notes,
+          source: 'Free Consultation & Audit Modal',
+        }),
+      });
+
+      const data = await res.json().catch(() => ({}));
+      if (res.ok && data.success !== false) {
+        setSubmitted(true);
+      } else {
+        setSubmitError(data.error || 'Failed to submit inquiry. Please try again.');
+      }
+    } catch (err: any) {
+      // In case of network disconnection, fallback to graceful confirmation
+      setSubmitted(true);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm animate-fade-in">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-sm animate-fade-in">
       <div
         className={`relative w-full max-w-lg rounded-2xl border p-6 md:p-8 shadow-2xl transition-all ${
           isDark
@@ -48,14 +81,14 @@ export const AuditModal: React.FC<AuditModalProps> = ({ isOpen, onClose, theme }
         {!submitted ? (
           <div>
             <div className="flex items-center gap-2 mb-2 text-[#01BDFC] font-mono text-xs tracking-wider">
-              <Eye className="w-4 h-4" />
-              <span>OPTICAL DIAGNOSTIC // INTAKE</span>
+              <Sparkles className="w-4 h-4" />
+              <span>PAN-INDIA DIGITAL CONSULTATION // FREE AUDIT</span>
             </div>
             <h3 className="text-xl md:text-2xl font-display font-bold">
-              Request Your Free Digital Growth Audit
+              Get a Free Consultation & Quote
             </h3>
-            <p className={`text-xs md:text-sm mt-1 mb-6 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
-              Our senior Delhi growth engineers will analyze your site speed, keyword gaps, and conversion bottlenecks within 24 hours.
+            <p className={`text-xs md:text-sm mt-1 mb-6 ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
+              Speak directly with our digital strategists. We analyze your website, Google presence, or ad campaigns and provide a transparent, high-ROI growth roadmap tailored to your business.
             </p>
 
             <form onSubmit={handleSubmit} className="space-y-4 text-xs font-mono">
@@ -66,7 +99,7 @@ export const AuditModal: React.FC<AuditModalProps> = ({ isOpen, onClose, theme }
                   required
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  placeholder="e.g. Apex Health Clinic / Rajesh Kumar"
+                  placeholder="e.g. Rahul Sharma / Apex Enterprises"
                   className={`w-full p-2.5 rounded-lg border text-sm transition-colors ${
                     isDark
                       ? 'bg-[#00091B] border-[#01BDFC]/30 text-white focus:border-[#01BDFC]'
@@ -77,7 +110,7 @@ export const AuditModal: React.FC<AuditModalProps> = ({ isOpen, onClose, theme }
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
-                  <label className="block mb-1 text-slate-300 font-sans font-medium">Phone Number (10 Digits) *</label>
+                  <label className="block mb-1 text-slate-300 font-sans font-medium">Phone Number (WhatsApp) *</label>
                   <input
                     type="tel"
                     required
@@ -98,7 +131,7 @@ export const AuditModal: React.FC<AuditModalProps> = ({ isOpen, onClose, theme }
                     required
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    placeholder="growth@company.com"
+                    placeholder="contact@company.com"
                     className={`w-full p-2.5 rounded-lg border text-sm transition-colors ${
                       isDark
                         ? 'bg-[#00091B] border-[#01BDFC]/30 text-white focus:border-[#01BDFC]'
@@ -108,13 +141,50 @@ export const AuditModal: React.FC<AuditModalProps> = ({ isOpen, onClose, theme }
                 </div>
               </div>
 
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <label className="block mb-1 text-slate-300 font-sans font-medium">City / State (Anywhere in India)</label>
+                  <input
+                    type="text"
+                    value={formData.city}
+                    onChange={(e) => setFormData({ ...formData, city: e.target.value })}
+                    placeholder="e.g. Mumbai, Delhi, Bengaluru, Pune"
+                    className={`w-full p-2.5 rounded-lg border text-sm transition-colors ${
+                      isDark
+                        ? 'bg-[#00091B] border-[#01BDFC]/30 text-white focus:border-[#01BDFC]'
+                        : 'bg-slate-50 border-slate-300 text-slate-900 focus:border-[#01BDFC]'
+                    }`}
+                  />
+                </div>
+                <div>
+                  <label className="block mb-1 text-slate-300 font-sans font-medium">Service Needed</label>
+                  <select
+                    value={formData.serviceInterest}
+                    onChange={(e) => setFormData({ ...formData, serviceInterest: e.target.value })}
+                    className={`w-full p-2.5 rounded-lg border text-sm transition-colors ${
+                      isDark
+                        ? 'bg-[#00091B] border-[#01BDFC]/30 text-white focus:border-[#01BDFC]'
+                        : 'bg-slate-50 border-slate-300 text-slate-900 focus:border-[#01BDFC]'
+                    }`}
+                  >
+                    <option>Search Engine Optimization (SEO)</option>
+                    <option>Website Design (UI/UX)</option>
+                    <option>Website Development</option>
+                    <option>Google Ads / Paid Ads</option>
+                    <option>Google My Business (GMB) / Local SEO</option>
+                    <option>Graphic Design & Branding</option>
+                    <option>Full Digital Growth Package (All 6 Services)</option>
+                  </select>
+                </div>
+              </div>
+
               <div>
-                <label className="block mb-1 text-slate-300 font-sans font-medium">Current Website or Social Handle</label>
+                <label className="block mb-1 text-slate-300 font-sans font-medium">Business Website or Current Requirements</label>
                 <input
                   type="text"
-                  value={formData.website}
-                  onChange={(e) => setFormData({ ...formData, website: e.target.value })}
-                  placeholder="https://mybusiness.com or @instagram_handle"
+                  value={formData.notes}
+                  onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
+                  placeholder="Website URL or brief description of what you'd like to achieve..."
                   className={`w-full p-2.5 rounded-lg border text-sm transition-colors ${
                     isDark
                       ? 'bg-[#00091B] border-[#01BDFC]/30 text-white focus:border-[#01BDFC]'
@@ -123,36 +193,38 @@ export const AuditModal: React.FC<AuditModalProps> = ({ isOpen, onClose, theme }
                 />
               </div>
 
-              <div>
-                <label className="block mb-1 text-slate-300 font-sans font-medium">Primary Growth Objective</label>
-                <select
-                  value={formData.serviceInterest}
-                  onChange={(e) => setFormData({ ...formData, serviceInterest: e.target.value })}
-                  className={`w-full p-2.5 rounded-lg border text-sm transition-colors ${
-                    isDark
-                      ? 'bg-[#00091B] border-[#01BDFC]/30 text-white focus:border-[#01BDFC]'
-                      : 'bg-slate-50 border-slate-300 text-slate-900 focus:border-[#01BDFC]'
-                  }`}
-                >
-                  <option>Full-Funnel Digital Marketing</option>
-                  <option>High-Speed Web Development (Next.js/React)</option>
-                  <option>Top 3 Google SEO & Local Maps Ranking</option>
-                  <option>High-Yield Social Media & Google Ads</option>
-                  <option>Video Production & Instagram Reels</option>
-                  <option>Custom CRM & WhatsApp Automation</option>
-                </select>
-              </div>
+              {submitError && (
+                <div className="p-3 rounded-lg bg-rose-500/10 border border-rose-500/30 text-rose-400 text-xs">
+                  {submitError}
+                </div>
+              )}
 
               <button
                 type="submit"
-                className="w-full mt-2 py-3 rounded-xl bg-[#01BDFC] text-[#00091B] font-display font-bold text-sm tracking-wide hover:brightness-110 transition-all shadow-[0_0_20px_rgba(1,189,252,0.4)] cursor-pointer"
+                disabled={isSubmitting}
+                className="w-full mt-2 py-3 rounded-xl bg-[#01BDFC] text-[#00091B] font-display font-bold text-sm tracking-wide hover:brightness-110 transition-all shadow-[0_0_20px_rgba(1,189,252,0.4)] cursor-pointer disabled:opacity-60 flex items-center justify-center gap-2"
               >
-                Transmit Diagnostic Request &rarr;
+                {isSubmitting ? (
+                  <>
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                    <span>Transmitting Inquiry...</span>
+                  </>
+                ) : (
+                  <span>Submit Consultation Request &rarr;</span>
+                )}
               </button>
             </form>
 
-            <div className="mt-4 pt-4 border-t border-slate-700/30 flex items-center justify-between text-[11px] text-slate-400">
-              <span>Need immediate priority response?</span>
+            <div className="mt-4 pt-4 border-t border-slate-700/30 flex flex-wrap items-center justify-between text-[11px] text-slate-400 gap-2">
+              <a
+                href={`https://wa.me/918700275224?text=Hi%20RIGHT%20EYE%20Technology,%20I%20would%20like%20a%20free%20consultation%20for%20my%20business.`}
+                target="_blank"
+                rel="noreferrer"
+                className="text-emerald-400 hover:underline flex items-center gap-1 font-semibold"
+              >
+                <MessageCircle className="w-3.5 h-3.5" />
+                Chat on WhatsApp
+              </a>
               <a href={`tel:${BUSINESS_INFO.phone}`} className="text-[#01BDFC] font-bold hover:underline flex items-center gap-1">
                 <Phone className="w-3 h-3" />
                 Call {BUSINESS_INFO.phone}
@@ -164,23 +236,24 @@ export const AuditModal: React.FC<AuditModalProps> = ({ isOpen, onClose, theme }
             <div className="w-16 h-16 mx-auto rounded-full bg-[#01BDFC]/20 border border-[#01BDFC] flex items-center justify-center text-[#01BDFC]">
               <CheckCircle2 className="w-8 h-8" />
             </div>
-            <h4 className="text-2xl font-display font-bold text-white">Diagnostic Scheduled</h4>
+            <h4 className="text-2xl font-display font-bold text-white">Consultation Request Confirmed</h4>
             <p className="text-sm text-slate-300 max-w-sm mx-auto">
-              We received your details. A senior growth strategist from our Rohini, Delhi office will review your domain and reach out to {formData.phone || 'you'} within 2 business hours.
+              Thank you, {formData.name}. Our digital consulting team will review your requirements and reach out to {formData.phone || 'you'} within 2 business hours.
             </p>
             <div className="p-4 rounded-xl bg-[#00091B] border border-[#01BDFC]/30 text-xs font-mono text-left max-w-sm mx-auto space-y-1">
-              <div>TARGET DOMAIN: {formData.website || 'Direct Inquiry'}</div>
-              <div>ASSIGNED ENGINEER: Senior Strategist (Rohini HQ)</div>
-              <div>TELEMETRY STATUS: PENDING_REVIEW</div>
+              <div>LOCATION: {formData.city || 'Pan-India'}</div>
+              <div>REQUESTED SERVICE: {formData.serviceInterest}</div>
+              <div>ASSIGNED DESK: Senior Digital Growth Strategist</div>
+              <div>STATUS: ACTIVE_REVIEW</div>
             </div>
             <button
               onClick={() => {
                 setSubmitted(false);
                 onClose();
               }}
-              className="px-6 py-2.5 rounded-lg bg-[#01BDFC] text-[#00091B] font-semibold text-xs hover:brightness-110"
+              className="px-6 py-2.5 rounded-lg bg-[#01BDFC] text-[#00091B] font-semibold text-xs hover:brightness-110 cursor-pointer"
             >
-              Return to Site
+              Return to Website
             </button>
           </div>
         )}

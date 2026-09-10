@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 210" fill="none" width="100%" height="100%">
+  <!-- Stylized R Emblem -->
+  <g transform="translate(10, 10)">
+    <!-- Main R Body (Dark Navy) -->
+    <path d="M 10 10 L 110 10 C 155 10 185 38 185 82 C 185 116 160 138 128 146 L 188 195 L 138 195 L 90 148 L 56 148 L 56 195 L 10 195 Z" fill="#00091B" />
+    
+    <!-- Cyan Accent at Bottom-Left of R -->
+    <polygon points="10,132 56,132 56,195 10,195" fill="#01BDFC" />
+    
+    <!-- Eye cutout inside R bowl -->
+    <g transform="translate(15, 10)">
+      <!-- Dark Eye Sclera / Almond Shape -->
+      <path d="M 38 72 C 58 42, 118 42, 142 72 C 118 102, 58 102, 38 72 Z" fill="#00091B" stroke="#01BDFC" stroke-width="2" />
+      <!-- Cyan Iris -->
+      <circle cx="90" cy="72" r="22" fill="#01BDFC" />
+      <!-- Black Pupil -->
+      <circle cx="90" cy="72" r="11" fill="#00091B" />
+      <!-- Reflection Specular -->
+      <circle cx="95" cy="66" r="3.5" fill="#FFFFFF" />
+    </g>
+  </g>
+
+  <!-- Typography Lockup -->
+  <g transform="translate(230, 20)">
+    <!-- Line 1: RIGHT - EYE -->
+    <text x="0" y="66" font-family="'Montserrat', 'Syne', 'Inter', system-ui, sans-serif" font-size="62" font-weight="900" letter-spacing="3" fill="#00091B">RIGHT</text>
+    <!-- Cyan Hyphen Dash -->
+    <rect x="235" y="41" width="38" height="13" rx="2" fill="#01BDFC" />
+    <text x="290" y="66" font-family="'Montserrat', 'Syne', 'Inter', system-ui, sans-serif" font-size="62" font-weight="900" letter-spacing="3" fill="#00091B">EYE</text>
+
+    <!-- Line 2: Technology -->
+    <text x="4" y="124" font-family="'Inter', system-ui, sans-serif" font-size="42" font-weight="500" letter-spacing="2" fill="#021630">Technology</text>
+
+    <!-- Line 3: Digital Solutions & Business Excellence -->
+    <text x="4" y="164" font-family="'Inter', system-ui, sans-serif" font-size="19" font-weight="600" letter-spacing="1.5" fill="#475569">
+      Digital Solutions <tspan fill="#01BDFC" font-weight="800">&amp;</tspan> Business Excellence
+    </text>
+  </g>
+</svg>
