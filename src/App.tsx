@@ -3,6 +3,8 @@ import { ThemeMode } from './types';
 import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
 import { AuditModal } from './components/AuditModal';
+import { GaneshOfferModal } from './components/GaneshOfferModal';
+import { GaneshFloatingPill } from './components/GaneshFloatingPill';
 import { SchemaOrg } from './components/SchemaOrg';
 
 // Pages
@@ -39,6 +41,26 @@ export default function App() {
 
   // Free Digital Growth Audit Modal state
   const [auditModalOpen, setAuditModalOpen] = useState(false);
+
+  // Ganesh Chaturthi 40% OFF Special Festive Popup & Banner state
+  const [ganeshOfferOpen, setGaneshOfferOpen] = useState(false);
+  const [bannerVisible, setBannerVisible] = useState(true);
+
+  // Auto-open Ganesh Chaturthi 40% OFF popup on first website load
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const alreadyShown = sessionStorage.getItem('ret_ganesh_offer_shown');
+      const dismissedForever = localStorage.getItem('ret_ganesh_offer_dismissed');
+      if (!alreadyShown && !dismissedForever) {
+        // Soft delay after initial paint for smooth, non-jarring appearance
+        const timer = setTimeout(() => {
+          setGaneshOfferOpen(true);
+          sessionStorage.setItem('ret_ganesh_offer_shown', 'true');
+        }, 1200);
+        return () => clearTimeout(timer);
+      }
+    }
+  }, []);
 
   // Sync theme changes to <html> classList and localStorage
   useEffect(() => {
@@ -243,6 +265,9 @@ export default function App() {
         theme={theme}
         onToggleTheme={toggleTheme}
         onOpenAudit={() => setAuditModalOpen(true)}
+        onOpenOffer={() => setGaneshOfferOpen(true)}
+        bannerVisible={bannerVisible}
+        onDismissBanner={() => setBannerVisible(false)}
       />
 
       {/* Main Viewport Container */}
@@ -256,6 +281,23 @@ export default function App() {
         isOpen={auditModalOpen}
         onClose={() => setAuditModalOpen(false)}
         theme={theme}
+      />
+
+      {/* Ganesh Chaturthi Flat 40% OFF Special Festive Offer Popup */}
+      <GaneshOfferModal
+        isOpen={ganeshOfferOpen}
+        onClose={() => setGaneshOfferOpen(false)}
+        theme={theme}
+        onOpenAudit={() => {
+          setGaneshOfferOpen(false);
+          setAuditModalOpen(true);
+        }}
+      />
+
+      {/* Floating Festive Re-open Badge Pill */}
+      <GaneshFloatingPill
+        isOpen={ganeshOfferOpen}
+        onOpen={() => setGaneshOfferOpen(true)}
       />
     </div>
   );

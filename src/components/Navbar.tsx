@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { RightEyeLogo } from './RightEyeLogo';
+import { GaneshTopBanner } from './GaneshTopBanner';
 import { ThemeMode } from '../types';
 import { SERVICES_DATA, INDUSTRIES_DATA, LOCATIONS_DATA, BUSINESS_INFO } from '../data/siteData';
 import { Phone, Sun, Moon, ChevronDown, Menu, X, Eye } from 'lucide-react';
@@ -10,6 +11,9 @@ interface NavbarProps {
   theme: ThemeMode;
   onToggleTheme: () => void;
   onOpenAudit: () => void;
+  onOpenOffer?: () => void;
+  bannerVisible?: boolean;
+  onDismissBanner?: () => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
@@ -18,6 +22,9 @@ export const Navbar: React.FC<NavbarProps> = ({
   theme,
   onToggleTheme,
   onOpenAudit,
+  onOpenOffer,
+  bannerVisible = false,
+  onDismissBanner,
 }) => {
   const isDark = theme === 'dark';
   const [isScrolled, setIsScrolled] = useState(false);
@@ -46,10 +53,19 @@ export const Navbar: React.FC<NavbarProps> = ({
             ? 'bg-[#00091B]/90 backdrop-blur-md border-b border-[#01BDFC]/20 shadow-[0_4px_30px_rgba(0,0,0,0.5)]'
             : 'bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm'
           : isDark
-          ? 'bg-transparent border-b border-white/5'
-          : 'bg-transparent border-b border-slate-100'
+          ? 'bg-[#00091B]/40 backdrop-blur-sm border-b border-white/5'
+          : 'bg-white/40 backdrop-blur-sm border-b border-slate-100'
       }`}
     >
+      {/* Ganesh Chaturthi Special Festive Announcement Bar */}
+      {bannerVisible && (
+        <GaneshTopBanner
+          visible={bannerVisible}
+          onOpenOffer={onOpenOffer || (() => {})}
+          onDismiss={onDismissBanner || (() => {})}
+        />
+      )}
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
         {/* Logo (Theme aware dual-variant) */}
         <button

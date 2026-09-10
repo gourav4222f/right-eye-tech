@@ -395,10 +395,17 @@ async function startServer() {
     });
   }
 
-  app.listen(PORT, '0.0.0.0', () => {
-    console.log(`RIGHT EYE Technology server running on http://0.0.0.0:${PORT}`);
-    console.log(`SMTP configured: Host=${SMTP_HOST}, User=${SMTP_USER}, Recipient=${RECIPIENT_EMAIL}`);
-  });
+  const port = process.env.PORT || 3000;
+  if (isNaN(Number(port))) {
+    app.listen(port, () => {
+      console.log(`RIGHT EYE Technology server listening on socket ${port}`);
+    });
+  } else {
+    app.listen(Number(port), '0.0.0.0', () => {
+      console.log(`RIGHT EYE Technology server running on port ${port}`);
+      console.log(`SMTP configured: Host=${SMTP_HOST}, User=${SMTP_USER}, Recipient=${RECIPIENT_EMAIL}`);
+    });
+  }
 }
 
 startServer();
