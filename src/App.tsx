@@ -21,12 +21,11 @@ import { ContactPage } from './pages/ContactPage';
 import { SERVICES_DATA, INDUSTRIES_DATA, LOCATIONS_DATA } from './data/siteData';
 
 export default function App() {
-  // Theme State: Default to dark (the native mode for RIGHT EYE Technology) or localStorage / system preference
+  // Theme State: Dark mode by default for RIGHT EYE Technology
   const [theme, setTheme] = useState<ThemeMode>(() => {
     if (typeof window !== 'undefined') {
       const saved = localStorage.getItem('ret_theme_mode') as ThemeMode | null;
       if (saved === 'dark' || saved === 'light') return saved;
-      return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
     }
     return 'dark';
   });
